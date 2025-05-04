@@ -1,4 +1,4 @@
-// DefiniÁıes dos pinos do LCD
+// Defini√ß√µes dos pinos do LCD
 sbit LCD_RS at RB1_bit;
 sbit LCD_EN at RB0_bit;
 sbit LCD_D4 at RB4_bit;
@@ -12,20 +12,20 @@ sbit LCD_D5_Direction at TRISB5_bit;
 sbit LCD_D6_Direction at TRISB6_bit;
 sbit LCD_D7_Direction at TRISB7_bit;
 
-// DefiniÁıes dos pinos dos botıes
-sbit Button1 at RB3_bit; // Bot„o para rolar seleÁ„o (Bebida / Tamanho)
-sbit Button2 at RB2_bit; // Bot„o para confirmar a seleÁ„o
+// Defini√ß√µes dos pinos dos bot√µes
+sbit Button1 at RB3_bit; // Bot√£o para rolar sele√ß√£o (Bebida / Tamanho)
+sbit Button2 at RB2_bit; // Bot√£o para confirmar a sele√ß√£o
 
 sbit Beb1 at RA0_bit;
 sbit Beb2 at RA1_bit;
 sbit Beb3 at RA2_bit;
 sbit Beb4 at RA3_bit;
 
-// FunÁ„o para exibir a saudaÁ„o
+// Fun√ß√£o para exibir a sauda√ß√£o
 void greetUser() {
   Lcd_Cmd(_LCD_CLEAR);             // Limpa o display
   Lcd_Cmd(_LCD_CURSOR_OFF);        // Cursor off
-  Lcd_Out(1, 1, "Bem-Vindo!");    // Exibe a saudaÁ„o
+  Lcd_Out(1, 1, "Bem-Vindo!");    // Exibe a sauda√ß√£o
   Delay_ms(5000);                 // Aguarda 5 segundos
 }
 
@@ -37,10 +37,10 @@ char tam1[] = " Pequena ";
 char tam2[] = " Media   ";
 char tam3[] = " Grande  ";
 
-// FunÁ„o para selecionar a bebida ou tamanho
+// Fun√ß√£o para selecionar a bebida ou tamanho
 int selectOption(int option) {
   int escolha = 0;
-  int cursor = 1; // Inicia com a primeira opÁ„o
+  int cursor = 1; // Inicia com a primeira op√ß√£o
   Lcd_Cmd(_LCD_CLEAR);
 
   if (option == 1) {
@@ -50,29 +50,29 @@ int selectOption(int option) {
   };
 
   while (1) {
-    if (Button1 == 1) { // Rola as opÁıes
+    if (Button1 == 1) { // Rola as op√ß√µes
       Delay_ms(200); // Debounce
       cursor++;
       if ((option == 1 && cursor > 4) || (option == 2 && cursor > 3)) {
-        cursor = 1; // Volta ‡ primeira opÁ„o
+        cursor = 1; // Volta √† primeira op√ß√£o
       }
     }
 
-    if (Button2 == 1) { // Confirma a seleÁ„o
+    if (Button2 == 1) { // Confirma a sele√ß√£o
       Delay_ms(200); // Debounce
       escolha = cursor;
       break;
     }
 
-    // Exibe as opÁıes no LCD
-    if (option == 1) { // SeleÁ„o de Bebida
+    // Exibe as op√ß√µes no LCD
+    if (option == 1) { // Sele√ß√£o de Bebida
       switch (cursor) {
         case 1: Lcd_Out(2, 1, drink1); break;
         case 2: Lcd_Out(2, 1, drink2); break;
         case 3: Lcd_Out(2, 1, drink3); break;
         case 4: Lcd_Out(2, 1, drink4); break;
       }
-    } else { // SeleÁ„o de Tamanho
+    } else { // Sele√ß√£o de Tamanho
       switch (cursor) {
         case 1: Lcd_Out(2, 1, tam1); break;
         case 2: Lcd_Out(2, 1, tam2); break;
@@ -83,14 +83,14 @@ int selectOption(int option) {
   return escolha;
 }
 
-// FunÁ„o principal
+// Fun√ß√£o principal
 void main() {
-  TRISA = 0x00;  // Configura as portas A como saÌda para o LCD
-  TRISB4_bit = 1;  // Configura as portas B como entrada para os botıes
+  TRISA = 0x00;  // Configura as portas A como sa√≠da para o LCD
+  TRISB4_bit = 1;  // Configura as portas B como entrada para os bot√µes
   TRISB5_bit = 1;
 
   Lcd_Init();      // Inicializa o LCD
-  greetUser();     // Exibe a saudaÁ„o ao usu·rio
+  greetUser();     // Exibe a sauda√ß√£o ao usu√°rio
   Lcd_Cmd(_LCD_CLEAR);
 
   while (1) {
@@ -111,51 +111,51 @@ void main() {
       if (bebida == 1){
         Beb1 = 1;    // Acende LED para Bebida 1
         Delay_ms(3000); // Aguarda 3 segundos
-        Beb1 = 0;    // Desliga o LED apÛs o tempo
+        Beb1 = 0;    // Desliga o LED ap√≥s o tempo
       } else if (bebida == 2) {
         Beb2 = 1;    // Acende LED para Bebida 2
         Delay_ms(3000); // Aguarda 3 segundos
-        Beb2 = 0;    // Desliga o LED apÛs o tempo
+        Beb2 = 0;    // Desliga o LED ap√≥s o tempo
       } else if (bebida == 3) {
         Beb3 = 1;    // Acende LED para Bebida 3
         Delay_ms(3000); // Aguarda 3 segundos
-        Beb3 = 0;    // Desliga o LED apÛs o tempo
+        Beb3 = 0;    // Desliga o LED ap√≥s o tempo
       } else {
         Beb4 = 1;    // Acende LED para Bebida 4
         Delay_ms(3000); // Aguarda 3 segundos
-        Beb4 = 0;    // Desliga o LED apÛs o tempo
+        Beb4 = 0;    // Desliga o LED ap√≥s o tempo
       }
     } else if (tamanho == 2) {
       if (bebida == 1){
         Beb1 = 1;    // Acende LED para Bebida 1
         Delay_ms(5000); // Aguarda 5 segundos
-        Beb1 = 0;    // Desliga o LED apÛs o tempo
+        Beb1 = 0;    // Desliga o LED ap√≥s o tempo
       } else if (bebida == 2) {
         Beb2 = 1;    // Acende LED para Bebida 2
         Delay_ms(5000); // Aguarda 5 segundos
-        Beb2 = 0;    // Desliga o LED apÛs o tempo
+        Beb2 = 0;    // Desliga o LED ap√≥s o tempo
       } else if (bebida == 3) {
         Beb3 = 1;    // Acende LED para Bebida 3
         Delay_ms(5000); // Aguarda 5 segundos
-        Beb3 = 0;    // Desliga o LED apÛs o tempo
+        Beb3 = 0;    // Desliga o LED ap√≥s o tempo
       } else {
         Beb4 = 1;    // Acende LED para Bebida 4
         Delay_ms(5000); // Aguarda 5 segundos
-        Beb4 = 0;    // Desliga o LED apÛs o tempo
+        Beb4 = 0;    // Desliga o LED ap√≥s o tempo
       }
     } else if (tamanho == 3) {
       if (bebida == 1){
         Beb1 = 1;    // Acende LED para Bebida 1
         Delay_ms(7000); // Aguarda 7 segundos
-        Beb1 = 0;    // Desliga o LED apÛs o tempo
+        Beb1 = 0;    // Desliga o LED ap√≥s o tempo
       } else if (bebida == 2) {
         Beb2 = 1;    // Acende LED para Bebida 2
         Delay_ms(7000); // Aguarda 7 segundos
-        Beb2 = 0;    // Desliga o LED apÛs o tempo
+        Beb2 = 0;    // Desliga o LED ap√≥s o tempo
       } else if (bebida == 3) {
         Beb3 = 1;    // Acende LED para Bebida 3
         Delay_ms(7000); // Aguarda 7 segundos
-        Beb3 = 0;    // Desliga o LED apÛs o tempo
+        Beb3 = 0;    // Desliga o LED ap√≥s o tempo
       } else {
         Beb4 = 1;    // Acende LED para Bebida 4
         Delay_ms(7000); // Aguarda 7 segundos
